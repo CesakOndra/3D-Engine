@@ -216,7 +216,9 @@ public class Renderer
             if (hit)
             {
                 // Calculating distance of a wall
-                double wallDistance = Math.cos((rayAngle - (Player.getInstance().getAngle() / 180 * Math.PI))) * dist;
+                double wallDistance =
+                        Math.cos((rayAngle - (Player.getInstance().getAngle() / 180 * Math.PI)))
+                                * dist;
                 walls[x] = wallDistance;
 
                 // Getting texture of the wall
@@ -271,6 +273,7 @@ public class Renderer
             double angle = ((opos[0] == 0)
                     ? ((opos[1] > 0) ? 90 : 270)
                     : (Math.atan(opos[1] / opos[0])) * 180 / Math.PI) + ((opos[0] < 0) ? 180 : 0);
+
             double angleDif = MyMath.angleDist(angle, Player.getInstance().getAngle());
 
             if (Math.abs(angleDif) >= fov || levelObject.distToPlayer() > Player.getInstance().getCamDistance() * Player.getInstance().getCamDistance())

@@ -55,7 +55,7 @@ public class Pickable extends LevelObject
         switch (bonus)
         {
             case HEAL -> {
-                if (Player.getInstance().getHealthPercent() < 1) Player.getInstance().getHeal(2);
+                if (Player.getInstance().getHealthPercent() < 1) Player.getInstance().getHeal(amount);
                 else return;
             }
             case GUN -> {

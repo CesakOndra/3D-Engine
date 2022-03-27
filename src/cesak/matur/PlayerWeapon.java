@@ -40,6 +40,11 @@ public class PlayerWeapon
 
     // ---
 
+    public boolean[] getWeaponOwned()
+    {
+        return weaponOwned;
+    }
+
     public BufferedImage getWeaponAnimation()
     {
         if (timePassed < shootAnimDelay)
@@ -160,7 +165,7 @@ public class PlayerWeapon
     private void performAttack()
     {
         timePassed = 0;
-        if (equipped > 0) ammunition[equipped]--;
+        if (equipped > 0) ammunition[weapons.get(equipped).getAmmunitionType()]--;
 
         // Sorts enemies by the distance from the player
         List<Enemy> enemies = new ArrayList<>(LevelManager.getInstance().getEnemies());

@@ -138,13 +138,11 @@ public class Player
      */
     public void performMovement(int a)
     {
-        double nextX = x + Math.cos((angle + a) / 180.0 * Math.PI) * (speed/* * modSpeed()*/ / (600));
-        double nextY = y + Math.sin((angle + a) / 180.0 * Math.PI) * (speed/* * modSpeed()*/ / (600));
+        double nextX = x + Math.cos((angle + a) / 180.0 * Math.PI) * (speed / (600));
+        double nextY = y + Math.sin((angle + a) / 180.0 * Math.PI) * (speed / (600));
 
         x = nextX;
         y = nextY;
-
-        //if (1 < 2) return;
 
         if (Collision.hitWall(x, y, hitbox))
         {

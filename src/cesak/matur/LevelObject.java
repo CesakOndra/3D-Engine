@@ -1,8 +1,5 @@
 package cesak.matur;
 
-import cesak.matur.Player;
-import cesak.matur.ResFileReader;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -24,8 +21,6 @@ public class LevelObject
     private double hitbox;
     // Object size in the scene
     private double size;
-    // On which tile this object is standing
-    private final int mapX, mapY;
 
     // ---
 
@@ -58,11 +53,6 @@ public class LevelObject
         return size;
     }
 
-    public int[] getTilePos()
-    {
-        return new int[]{mapX, mapY};
-    }
-
     public double getScreenX()
     {
         return screenX;
@@ -93,10 +83,7 @@ public class LevelObject
         this.screenX = xPos;
     }
 
-    public void setYPos(double yPos)
-    {
-        this.screenY = yPos;
-    }
+    // ---
 
     public LevelObject(int id, int x, int y, String path)
     {
@@ -105,8 +92,6 @@ public class LevelObject
 
         this.x = x + 0.5;
         this.y = y + 0.5;
-        mapX = x;
-        mapY = y;
 
         for (String string : list)
         {
@@ -122,7 +107,8 @@ public class LevelObject
 
         try
         {
-            myImage = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource(path + id + "/def.png")));
+            myImage = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource
+                    (path + id + "/def.png")));
 
         } catch (IOException e)
         {
@@ -130,13 +116,19 @@ public class LevelObject
         }
     }
 
-    // Returns distance of this LevelObject from the Player
+    /**
+     * @return distance of this LevelObject from the Player
+     */
     public double distToPlayer()
     {
-        return (getX() - Player.getInstance().getX()) * (getX() - Player.getInstance().getX()) + (getY() - Player.getInstance().getY()) * (getY() - Player.getInstance().getY());
+        return (getX() - Player.getInstance().getX()) * (getX() - Player.getInstance().getX())
+                +
+                (getY() - Player.getInstance().getY()) * (getY() - Player.getInstance().getY());
     }
 
-    // Returns distance to the Player in camera view
+    /**
+     * @return distance to the Player in camera view
+     */
     public double distToPlayerTan()
     {
         double angle = (getScreenX() * 90) - 45;

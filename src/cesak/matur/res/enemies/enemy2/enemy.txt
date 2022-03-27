@@ -1,6 +1,6 @@
 Bloodthirsty Plant
 health: 8
 damage: 10
-speed: 10
-attackSpeed: 1.333
+speed: 17
+attackSpeed: 0.6
 attackRange: 1

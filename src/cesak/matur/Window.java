@@ -1,6 +1,7 @@
 package cesak.matur;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,6 @@ public class Window extends JFrame
 
     private void buildGUI()
     {
-        setTitle("3D Java Game");
         setSize(screenWidth, screenHeight);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -138,6 +138,14 @@ public class Window extends JFrame
                 return;
             }
 
+            paintFloorCeiling(g);
+            paintWalls(g);
+            paintObjects(g);
+            paintUI(g);
+        }
+
+        private void paintFloorCeiling(Graphics g)
+        {
             // Ceiling
             g.setColor(new Color(60, 60, 60)); // 0, 0, 0.1f
             g.fillRect(0, 0, screenWidth, screenHeight / 2);
@@ -145,8 +153,10 @@ public class Window extends JFrame
             // Floors
             g.setColor(new Color(125, 125, 125));
             g.fillRect(0, screenHeight / 2, screenWidth, screenHeight / 2);
+        }
 
-            //region Walls
+        private void paintWalls(Graphics g)
+        {
             for (int i = 0; i < walls.length; i++)
             {
                 if (walls[i] == 0) continue;
@@ -162,7 +172,7 @@ public class Window extends JFrame
                 int colTopPixelY = (scaledHeight / 2) - (lineHeight / 2);
 
                 // Index of the column in the texture of the wall which was hit
-                int textureColumnIndex/* = (int) Math.floor((double) LevelManager.getInstance().getTex(what[i]).getWidth() * texs[i])*/;
+                int textureColumnIndex;
 
                 int wallType = Integer.parseInt(what[i]);
                 textureColumnIndex = (int) Math.floor((double) LevelManager.getInstance().getTexture(wallType).getWidth() * texs[i]);
@@ -246,9 +256,11 @@ public class Window extends JFrame
                     g.fillRect(i * scale, pixelY * scale, scale, ySize);
                 }
             }
-            //endregion
+        }
 
-            //region Objects
+        private void paintObjects(Graphics g)
+        {
+
             List<LevelObject> levelObjects = new ArrayList<>();
 
             levelObjects.addAll(LevelManager.getInstance().getObjects());
@@ -343,11 +355,10 @@ public class Window extends JFrame
                     }
                 }
             }
+        }
 
-            //endregion
-
-            // --- UI ---
-
+        private void paintUI(Graphics g)
+        {
             // Cursor
 
             g.setColor(Color.white);
@@ -374,22 +385,34 @@ public class Window extends JFrame
 
             g.setColor(Color.blue);
             g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-            g.drawString("AMMO", 190, screenHeight - 25);
+            g.drawString("AMMO", 225, screenHeight - 25);
 
             g.setColor(Color.blue);
             g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
-            g.drawString(String.valueOf(Player.getInstance().getMyWeapon().getCurrentAmmunition()), 100, screenHeight - 25);
+            g.drawString(String.valueOf(Player.getInstance().getMyWeapon().getCurrentAmmunition()), 135, screenHeight - 25);
+
+            // Weapons
+
+            g.setColor(Color.cyan);
+            g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+            g.drawString("WEAPONS", 15, screenHeight - 100);
+
+            g.setColor(Color.cyan);
+            g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+
+            for (int i = 0; i < Player.getInstance().getMyWeapon().getWeaponOwned().length; i++)
+            {
+                if (Player.getInstance().getMyWeapon().getWeaponOwned()[i])
+                {
+                    g.drawString(String.valueOf(i + 1), 25, screenHeight - 75 + i * 20);
+                }
+            }
         }
     };
 
     public void redraw()
     {
-        int whichScene = SceneManager.getInstance().getCurrentScene();
-
-        switch (whichScene)
-        {
-            case 1 -> redrawGame();
-        }
+        redrawGame();
     }
 
     private void redrawGame()

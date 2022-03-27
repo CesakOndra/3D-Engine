@@ -190,12 +190,12 @@ public class Enemy extends LevelObject
         }
         else if (isAttacking)
         {
-            if (frame == (60 * (1 / attackSpeed)))
+            if (frame == (60 * (attackSpeed)))
             {
                 setMyImage(imgAttack);
                 performAttack();
             }
-            else if (frame == (60 * (1 / attackSpeed)) + 25)
+            else if (frame == (60 * (attackSpeed)) + 25)
             {
                 stopAttack();
             }
